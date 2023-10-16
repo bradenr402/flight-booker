@@ -1,0 +1,24 @@
+<h1>Book a Flight</h1>
+
+<%= form_with(model: @flight, url: flights_path, method: :get) do |form| %>
+  <% @days = Flight.all.pluck(:departure_time).map { |day| day.strftime('%B %d, %Y') }.uniq %>
+  <h2>Book a One-way Flight</h2>
+  <h4>Departure</h4>
+  <%= select_tag 'departure_airport_id',
+                  options_from_collection_for_select(@airports, 'id', 'city'),
+                  include_blank: 'From' %>
+
+  <h4>Arrival</h4>
+  <%= select_tag 'arrival_airport_id',
+                  options_from_collection_for_select(@airports, 'id', 'city'),
+                  include_blank: 'To' %>
+
+  <h4>Date</h4>
+  <%= select_tag 'departure_time', options_for_select(@days),
+                  include_blank: 'Departing', style: 'min-width: 144px' %>
+
+  <h4>Passengers</h4>
+  <%= select_tag :passengers, options_for_select(1..4), style: 'min-width: 40px' %>
+
+  <%= form.submit 'Search' %>
+<% end %>
