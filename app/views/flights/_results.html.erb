@@ -2,11 +2,9 @@
   <h2>Search Results</h2>
 
   <% if @flights.any? %>
-    <%= form_with(model: @flight,
-    # url: new_booking_path,
-    method: 'get') do |form| %>
+    <%= form_with(model: @flight, url: new_booking_path, method: 'get') do |form| %>
       <%= form.hidden_field :num_of_passengers, value: @num_of_passengers %>
-      
+
       <h4>
         <%= "#{pluralize(@flights.count, 'flight')} available
         for #{@flights.first.departure_date_formatted}" %>

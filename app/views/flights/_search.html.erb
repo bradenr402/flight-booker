@@ -1,8 +1,7 @@
-<h1>Book a Flight</h1>
+<h1>Book a One-way Flight</h1>
 
 <%= form_with(model: @flight, url: flights_path, method: :get) do |form| %>
   <% @days = Flight.all.pluck(:departure_time).map { |day| day.strftime('%B %d, %Y') }.uniq %>
-  <h2>Book a One-way Flight</h2>
   <h4>Departure</h4>
   <%= select_tag 'departure_airport_id',
                   options_from_collection_for_select(@airports, 'id', 'city'),
