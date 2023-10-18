@@ -1,5 +1,3 @@
-<h1>Book a One-way Flight</h1>
-
 <%= form_with(model: @flight, url: flights_path, method: :get) do |form| %>
   <% @days = Flight.all.pluck(:departure_time).map { |day| day.strftime('%B %d, %Y') }.uniq %>
   <h4>Departure</h4>

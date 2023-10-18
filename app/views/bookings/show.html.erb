@@ -1,6 +1,6 @@
 <h1>Your flight has been booked!</h1>
-<h2>Flight Information</h2>
 
+<h2>Flight Information</h2>
 <h4>
   <%= "#{@booking.flight.departure_airport.city}
           (#{@booking.flight.departure_airport.code}) \u2002 \u2192 \u2002
@@ -28,5 +28,4 @@
     <p><strong>Name:</strong> <%= passenger.name.titleize %></p>
     <p><strong>Email:</strong> <%= passenger.email %></p>
   </div>
-
 <% end %>
