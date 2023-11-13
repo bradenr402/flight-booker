@@ -13,10 +13,10 @@
       <% @flights.each do |flight| %>
         <div>
           <%= form.radio_button :flight_id, flight.id %>
-          <%= "#{flight.departure_airport.city}
+          <%= form.label :flight_id, "#{flight.departure_airport.city}
                 (#{flight.departure_airport.code}) \u2002 \u2192 \u2002
                 #{flight.arrival_airport.city}
-                (#{flight.arrival_airport.code})" %> &#8194; | &#8194;
+                (#{flight.arrival_airport.code})", :value => flight.id %> &#8194; | &#8194;
           <%= "Departure: #{flight.departure_time_formatted}" %> &#8194; | &#8194;
           <%= "Duration: #{flight.flight_duration.to_i} minutes" %>
         </div>

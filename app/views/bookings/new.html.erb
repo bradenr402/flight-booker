@@ -1,50 +1,81 @@
 <h1>Booking Information</h1>
+<% if @booking.errors.any? %>
+  <h2><%= pluralize(@booking.errors.count, 'error') %> prohibited this booking from being created:</h2>
+  <ul>
+    <% @bookings.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
 
-<%= form_with model: @booking do |form| %>
-  <% if @booking.errors.any? %>
-    <h2><%= pluralize(@booking.errors.count, 'error') %> prohibited this booking from being created:</h2>
-    <ul>
-      <% @bookings.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  <% end %>
+<h4>
+  <%= "#{@flight.departure_airport.city}
+        (#{@flight.departure_airport.code}) \u2002 \u2192 \u2002
+        #{@flight.arrival_airport.city}
+        (#{@flight.arrival_airport.code})" %>
+</h4>
 
-  <h4>
-    <%= "#{@flight.departure_airport.city}
-          (#{@flight.departure_airport.code}) \u2002 \u2192 \u2002
-          #{@flight.arrival_airport.city}
-          (#{@flight.arrival_airport.code})" %>
-  </h4>
-  <div>
-    <%= "Departure: #{@flight.departure_time_formatted}" %>
-  </div>
-  <div>
-    <%= "Duration: #{@flight.flight_duration.to_i} minutes" %>
-  </div>
-  <div>
-    <%= "Flight Number: #{@flight.id}" %>
-  </div>
+<div>
+  <%= "Departure: #{@flight.departure_time_formatted}" %>
+</div>
+<div>
+  <%= "Duration: #{@flight.flight_duration.to_i} minutes" %>
+</div>
+<div>
+  <%= "Flight Number: #{@flight.id}" %>
+</div>
+
+<%= form_with model: @booking, html: {:id => "main_form", :"data-controller" => "passenger"} do |form| %>
+  <%= form.hidden_field :number_of_passengers, value: @number_of_passengers, "data-passenger-target": "numberPassengersElement" %>
 
   <% (1..@num_of_passengers.to_i).each do |passenger_number| %>
-    <% if @num_of_passengers.to_i > 1 %>
-      <h4><%= "Passenger #{passenger_number} Information" %></h4>
-    <% else %>
+    <div data-passenger-target="passengerBox">
       <h4><%= "Passenger Information" %></h4>
-    <% end %>
+      <div id="passenger_fields">
+        <%= form.fields_for :passengers do |sub_form| %>
+          <%= form.hidden_field :flight_id, value: @flight.id %>
+          <div>
+            <%= sub_form.label :name, "Passenger name:" %>
+            <%= sub_form.text_field :name %>
+          </div>
 
-    <%= form.fields_for :passengers do |sub_form| %>
-      <%= form.hidden_field :flight_id, value: @flight.id %>
-      <div>
-        <%= sub_form.label :name %>
-        <%= sub_form.text_field :name %>
+          <div>
+            <%= sub_form.label :email, "Passenger email:" %>
+            <%= sub_form.email_field :email %>
+          </div>
+        <% end %>
       </div>
-      <div>
-        <%= sub_form.label :email %>
-        <%= sub_form.email_field :email %>
-      </div>
-    <% end %>
+    </div>
   <% end %>
 
+  <div class="buttons">
+    <button data-action="passenger#add" type="button">Add Passenger</button>
+    <button data-action="passenger#remove" type="button">Remove Passenger</button>
+  </div>
+
+  <%# f.label :billing_address, "Your billing address" %>
+  <%# f.text_field :billing_address %>
+
   <%= form.submit 'Book Flight' %>
+
+  <template data-controller="passenger" id="new_passenger">
+    <div data-passenger-target="passengerBox">
+        <h4><%= "Passenger Information" %></h4>
+        <div id="passenger_fields">
+          <%= form.fields_for :passengers do |sub_form| %>
+            <%= form.hidden_field :flight_id, value: @flight.id %>
+            <div>
+              <%= sub_form.label :name, "Passenger name:" %>
+              <%= sub_form.text_field :name %>
+            </div>
+
+            <div>
+              <%= sub_form.label :email, "Passenger email:" %>
+              <%= sub_form.email_field :email %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  </template>
+
 <% end %>

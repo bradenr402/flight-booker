@@ -1,3 +1,15 @@
+Passenger.destroy_all
+p "Destroyed all passengers"
+
+Booking.destroy_all
+p "Destroyed all bookings"
+
+Airport.destroy_all
+p "Destroyed all airports"
+
+Flight.destroy_all
+p "Destroyed all flights"
+
 # Airport seeds
 
 airport_list = [
@@ -16,6 +28,8 @@ airport_list = [
 airport_list.each do |airport|
   Airport.create(code: airport[:code], city: airport[:city])
 end
+
+p "Created #{Airport.count} airports"
 
 # Flight seeds
 
@@ -39,3 +53,5 @@ airports.each do |depart|
     end
   end
 end
+
+p "Created #{Flight.count} flights"
