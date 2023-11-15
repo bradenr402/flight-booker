@@ -1,0 +1,24 @@
+<% @booking = params[:booking] %>
+Your flight has been booked!
+===============================================
+
+Flight Information
+-----------------------------------------------
+<%# _______________________________________________ %>
+<%= "#{@booking.flight.departure_airport.city} (#{@booking.flight.departure_airport.code}) \u2002 \u2192 \u2002 #{@booking.flight.arrival_airport.city} (#{@booking.flight.arrival_airport.code})" %>
+
+  Departure: <%= @booking.flight.departure_time_formatted %>
+  Duration: <%= @booking.flight.flight_duration.to_i %> minutes
+  Flight Number: <%= @booking.flight.id %>
+
+
+<% @booking.passengers.each_with_index do |passenger, passenger_number| %>
+  <% if @booking.passengers.count > 1 %>
+  <%= "Passenger #{passenger_number + 1} Information" %>
+  <% else %>
+  <%= "Passenger Information" %>
+  <% end %>
+    Name: <%= passenger.name.titleize %>
+    Email: <%= passenger.email %>
+
+<% end %>

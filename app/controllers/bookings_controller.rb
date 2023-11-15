@@ -15,6 +15,8 @@ class BookingsController < ApplicationController
     @booking = @flight.bookings.build(booking_params)
 
     if @booking.save
+      PassengerMailer.with(passenger: @booking.passengers.first, booking: @booking).confirmation_email.deliver_now
+
       redirect_to @booking
     else
       render :new, status: :unprocessable_entity
