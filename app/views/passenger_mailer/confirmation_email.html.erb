@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1>Your flight has been booked!</h1>
+<h1>Your flight has been booked!</h1>
 
-    <h2>Flight Information</h2>
-    <h4>
-      <%= "#{@booking.flight.departure_airport.city}
-              (#{@booking.flight.departure_airport.code}) \u2002 \u2192 \u2002
-              #{@booking.flight.arrival_airport.city}
-              (#{@booking.flight.arrival_airport.code})" %>
-    </h4>
-    <div>
-      <%= "Departure: #{@booking.flight.departure_time_formatted}" %>
-    </div>
-    <div>
-      <%= "Duration: #{@booking.flight.flight_duration.to_i} minutes" %>
-    </div>
-    <div>
-      <%= "Flight Number: #{@booking.flight.id}" %>
-    </div>
+<h2>Flight Information</h2>
+<h4>
+  <%= "#{@booking.flight.departure_airport.city}
+          (#{@booking.flight.departure_airport.code}) \u2002 \u2192 \u2002
+          #{@booking.flight.arrival_airport.city}
+          (#{@booking.flight.arrival_airport.code})" %>
+</h4>
+<div>
+  <%= "Departure: #{@booking.flight.departure_time_formatted}" %>
+</div>
+<div>
+  <%= "Duration: #{@booking.flight.flight_duration.to_i} minutes" %>
+</div>
+<div>
+  <%= "Flight Number: #{@booking.flight.id}" %>
+</div>
 
-    <% @booking.passengers.each_with_index do |passenger, passenger_number| %>
-      <% if @booking.passengers.count > 1 %>
-        <h3><%= "Passenger #{passenger_number + 1} Information" %></h3>
-      <% else %>
-        <h3><%= "Passenger Information" %></h3>
-      <% end %>
+<% @booking.passengers.each_with_index do |passenger, passenger_number| %>
+  <% if @booking.passengers.count > 1 %>
+    <h3><%= "Passenger #{passenger_number + 1} Information" %></h3>
+  <% else %>
+    <h3><%= "Passenger Information" %></h3>
+  <% end %>
 
-      <div>
-        <p><strong>Name:</strong> <%= passenger.name.titleize %></p>
-        <p><strong>Email:</strong> <%= passenger.email %></p>
-      </div><br>
-    <% end %>
-  </body>
-</html>
+  <div>
+    <p><strong>Name:</strong> <%= passenger.name.titleize %></p>
+    <p><strong>Email:</strong> <%= passenger.email %></p>
+  </div><br>
+<% end %>
